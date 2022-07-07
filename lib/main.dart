@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-SharedPreferences _sharedPreferences;
+SharedPreferences? _sharedPreferences;
 
 Future<Null> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   _sharedPreferences = await SharedPreferences.getInstance();
   runApp(MyApp());
 }
@@ -23,8 +24,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -40,13 +41,13 @@ class _MyHomePageState extends State<MyHomePage> {
       _string =
       _notification ? 'Notificações Ativada' : 'Notificações Desativada';
     });
-    _sharedPreferences.setBool('_notification', value);
+    _sharedPreferences?.setBool('_notification', value);
   }
 
   @override
   void initState() {
     // TODO: implement initState
-    var value = _sharedPreferences.getBool('_notification') ?? false;
+    var value = _sharedPreferences?.getBool('_notification') ?? false;
     _update(value);
     super.initState();
   }
@@ -55,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: Center(
         child: Column(
